@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+android:orientation="vertical" android:layout_width="match_parent"
+android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/textViewDesc"
-        android:layout_width="107dp"
-        android:layout_height="wrap_content"
+        android:layout_width="255dp"
+        android:layout_height="82dp"
+        android:fontFamily="@font/aclonica"
         android:text="TextView"
         android:textAllCaps="false"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
@@ -14,8 +15,9 @@
 
     <TextView
         android:id="@+id/textViewPrice"
-        android:layout_width="105dp"
-        android:layout_height="wrap_content"
+        android:layout_width="112dp"
+        android:layout_height="71dp"
+        android:fontFamily="@font/aclonica"
         android:text="TextView" />
 
 </LinearLayout>
