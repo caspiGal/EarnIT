@@ -4,11 +4,7 @@
 
 ## Project team :
 
-### Elyashiv Deri - 305368433
-
-### Lioz elmalem - 205804693 
-
-### gal caspi - 12345678
+### Elyashiv Deri , ### Lioz elmalem ,### gal caspi 
 
 ### The app EarnIT was created to answer people who want to find a professional who can give them an effective and quick response to the work they want to do! 
 
