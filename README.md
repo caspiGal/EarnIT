@@ -4,7 +4,7 @@
 
 ## Project team :
 
-### Elyashiv Deri , ### Lioz elmalem ,### gal caspi 
+### Elyashiv Deri , Lioz elmalem , gal caspi 
 
 ### The app EarnIT was created to answer people who want to find a professional who can give them an effective and quick response to the work they want to do! 
 
