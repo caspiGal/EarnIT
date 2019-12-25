@@ -57,7 +57,6 @@ public class ReyclerView_Config {
             phoneText.setText("Phone : " + post.getPhone());
             emailText.setText("Email : " + post.getEmail());
             this.key = key;
-
         }
     }
 

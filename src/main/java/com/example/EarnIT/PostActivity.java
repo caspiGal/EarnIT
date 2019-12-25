@@ -1,3 +1,4 @@
+
 package com.example.EarnIT;
 
 import androidx.annotation.NonNull;
@@ -36,8 +37,8 @@ public class PostActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
 
-        email = findViewById(R.id.emailText);
-        phone = findViewById(R.id.phoneText);
+        email = findViewById(R.id.editText3);
+        phone = findViewById(R.id.editText2);
         description = findViewById(R.id.description);
         price = findViewById(R.id.priceText);
         postbtn = findViewById(R.id.postButton);

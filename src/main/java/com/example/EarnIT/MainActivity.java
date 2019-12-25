@@ -37,7 +37,6 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<Post> posts = new ArrayList<>();
     FirebaseAuth mAuth;
     DatabaseReference myRef;
-    DatabaseReference myRef_for_users;
     TextView welcome;
     String currentUserID;
     private RecyclerView mRecyclerView;
@@ -52,13 +51,11 @@ public class MainActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         welcome = findViewById(R.id.welcome);
         myRef = database.getInstance().getReference("Posts");
-        myRef_for_users = database.getInstance().getReference("Users");
         logOutbtn = findViewById(R.id.logOutbtn);
         postbtn = findViewById(R.id.postbtn);
         currentUserID = mAuth.getCurrentUser().getUid();
         mRecyclerView = (RecyclerView) findViewById(R.id.RecyclerViewJob);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-
 
         FirebaseDatabaseHelper FH = new FirebaseDatabaseHelper();
 
