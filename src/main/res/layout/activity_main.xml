@@ -50,8 +50,8 @@
 
     <TextView
         android:id="@+id/welcome"
-        android:layout_width="405dp"
-        android:layout_height="101dp"
+        android:layout_width="198dp"
+        android:layout_height="53dp"
         android:layout_marginStart="32dp"
         android:layout_marginLeft="32dp"
         android:layout_marginTop="240dp"
@@ -59,13 +59,14 @@
         android:layout_marginRight="32dp"
         android:layout_marginBottom="150dp"
         android:fontFamily="@font/aclonica"
+        android:text="Welcome"
         android:textSize="25sp"
         app:layout_constraintBottom_toTopOf="@+id/logOutbtn"
         app:layout_constraintEnd_toStartOf="@+id/postbtn"
-        app:layout_constraintHorizontal_bias="0.406"
+        app:layout_constraintHorizontal_bias="0.248"
         app:layout_constraintStart_toEndOf="@+id/logOutbtn"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.229" />
+        app:layout_constraintVertical_bias="0.244" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/RecyclerViewJob"

@@ -23,7 +23,12 @@ public class PostActivity extends AppCompatActivity {
     private DatabaseReference myRef;
     private EditText description;
     private EditText price;
+    private EditText email;
+    private EditText phone;
     private Button postbtn;
+
+    private ProgressBar progressBar;
+
 
 
     @Override
@@ -31,17 +36,23 @@ public class PostActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
 
+        email = findViewById(R.id.emailText);
+        phone = findViewById(R.id.phoneText);
         description = findViewById(R.id.description);
         price = findViewById(R.id.priceText);
         postbtn = findViewById(R.id.postButton);
 
+        progressBar = findViewById(R.id.progressBar3);
+
+
         postbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                progressBar.setVisibility(View.VISIBLE);
 
                 myRef = database.getInstance().getReference("Posts");
                 String id = myRef.push().getKey();
-                Post post = new Post(description.getText().toString(),price.getText().toString());
+                Post post = new Post(description.getText().toString(),price.getText().toString(),email.getText().toString(),phone.getText().toString());
                 myRef.child(id).setValue(post)
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
@@ -58,7 +69,9 @@ public class PostActivity extends AppCompatActivity {
                                 price.setText("");
                             }
                         });
+                progressBar.setVisibility(View.GONE);
             }
+
         });
 
 

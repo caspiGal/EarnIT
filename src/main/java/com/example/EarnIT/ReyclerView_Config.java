@@ -1,7 +1,12 @@
 package com.example.EarnIT;
 
 import android.content.Context;
+import android.provider.ContactsContract;
+import android.text.TextUtils;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListAdapter;
 import android.widget.TextView;
@@ -9,6 +14,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.firebase.auth.FirebaseAuth;
+
+import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -23,12 +32,13 @@ public class ReyclerView_Config {
         recyclerView.setAdapter(mPostAdapter);
     }
 
-
-
     class PostItemView extends RecyclerView.ViewHolder {
 
         private TextView textViewDesc;
         private TextView textViewPrice;
+        private TextView phoneText;
+        private TextView emailText;
+
         private String key;
 
         public PostItemView(ViewGroup parent ){
@@ -36,14 +46,16 @@ public class ReyclerView_Config {
 
             textViewDesc = (TextView) itemView.findViewById(R.id.textViewDesc);
             textViewPrice = (TextView) itemView.findViewById(R.id.textViewPrice);
-
-
+            phoneText = (TextView) itemView.findViewById(R.id.phoneText);
+            emailText = (TextView) itemView.findViewById(R.id.emailText);
 
         }
 
         public void bind( Post post, String key){
-            textViewDesc.setText(post.getDescription());
-            textViewPrice.setText(post.getPrice());
+            textViewDesc.setText("Description : " + post.getDescription());
+            textViewPrice.setText("Price : " + post.getPrice());
+            phoneText.setText("Phone : " + post.getPhone());
+            emailText.setText("Email : " + post.getEmail());
             this.key = key;
 
         }

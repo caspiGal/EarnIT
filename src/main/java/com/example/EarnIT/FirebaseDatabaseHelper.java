@@ -14,11 +14,13 @@ import java.util.List;
 public class FirebaseDatabaseHelper {
 
     private FirebaseDatabase mDatabase;
-    private DatabaseReference myRef;
+    private DatabaseReference postR;
     private List<Post> posts = new ArrayList<>();
 
+
+
     public interface  DataStatus{
-        void  DataIsLoaded(List<Post> posts, List<String> keys );
+        void  DataIsLoaded(List<Post> posts , List<String> keys );
         void  DataIsInserted();
         void  DataIsDeleted();
 
@@ -26,13 +28,12 @@ public class FirebaseDatabaseHelper {
 
     public FirebaseDatabaseHelper() {
         mDatabase = FirebaseDatabase.getInstance();
-        myRef = mDatabase.getReference("Posts");
-
-
+        postR = mDatabase.getReference("Posts");
     }
 
+
     public void readPosts(final DataStatus dataStatus){
-        myRef.addValueEventListener(new ValueEventListener() {
+        postR.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 posts.clear();
@@ -41,8 +42,8 @@ public class FirebaseDatabaseHelper {
                     keys.add(keyNode.getKey());
                     Post post = keyNode.getValue(Post.class);
                     posts.add(post);
-
                 }
+
                 dataStatus.DataIsLoaded(posts,keys);
 
             }
@@ -53,4 +54,5 @@ public class FirebaseDatabaseHelper {
             }
         });
     }
+
 }
