@@ -25,6 +25,6 @@
 ### The app comes to answer "small" - temporary work.
 
 
-
+![](https://github.com/caspiGal/EarnIT/blob/master/1462492500_1.gif) 
 
 
