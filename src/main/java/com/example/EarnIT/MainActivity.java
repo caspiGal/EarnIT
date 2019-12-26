@@ -63,7 +63,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void DataIsLoaded(List<Post> posts ,List<String> keys) {
                 new ReyclerView_Config().setConfig(mRecyclerView, MainActivity.this, posts, keys);
-
             }
 
             @Override

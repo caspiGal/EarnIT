@@ -64,7 +64,7 @@ public class Login extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
-                            if(mEmail.getText().toString().equals("caspigal7@gmail.com") || mEmail.getText().toString().equals("liozelmalem@gmail.com")){
+                            if(mEmail.getText().toString().equals("elyashivderi17@gmail.com") || mEmail.getText().toString().equals("caspigal7@gmail.com") || mEmail.getText().toString().equals("liozelmalem@gmail.com")){
                                 Toast.makeText(Login.this,"Hello Manager , What Would You Like To Do Today ? ",Toast.LENGTH_SHORT).show();
                                 Intent j = new Intent(getApplicationContext(),ManagerActivity.class);
                                 startActivity(j);

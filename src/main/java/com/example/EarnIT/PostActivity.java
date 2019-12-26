@@ -68,6 +68,8 @@ public class PostActivity extends AppCompatActivity {
                                 Toast.makeText(PostActivity.this, "Failed adding post", Toast.LENGTH_LONG).show();
                                 description.setText("");
                                 price.setText("");
+                                phone.setText("");
+                                email.setText("");
                             }
                         });
                 progressBar.setVisibility(View.GONE);

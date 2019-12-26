@@ -47,7 +47,7 @@
     <EditText
         android:id="@+id/emailText"
         android:layout_width="match_parent"
-        android:layout_height="73dp"
+        android:layout_height="64dp"
         android:background="@color/colorPrimary"
         android:ems="10"
         android:hint="Email"
