@@ -1,48 +1,42 @@
 package com.example.EarnIT;
 
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import android.accounts.Account;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Bundle;
-import android.util.TypedValue;
+import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import com.example.EarnIT.Register;
 import android.widget.Button;
-import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 
 
 public class MainActivity extends AppCompatActivity {
 
     final FirebaseDatabase database = FirebaseDatabase.getInstance();
-    ArrayList<Post> posts = new ArrayList<>();
-    FirebaseAuth mAuth;
-    DatabaseReference myRef;
-    TextView welcome;
-    String currentUserID;
+    private FirebaseAuth mAuth;
+    private DatabaseReference myRef;
+    private DatabaseReference userRef;
+    private TextView welcome;
     private RecyclerView mRecyclerView;
+    private Button postbtn;
+    private Button logOutbtn;
 
-    Button postbtn;
-    Button logOutbtn;
+    private String currentName = "";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,27 +45,54 @@ public class MainActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         welcome = findViewById(R.id.welcome);
         myRef = database.getInstance().getReference("Posts");
+        userRef = database.getInstance().getReference("Users");
         logOutbtn = findViewById(R.id.logOutbtn);
         postbtn = findViewById(R.id.postbtn);
-        currentUserID = mAuth.getCurrentUser().getUid();
-        mRecyclerView = (RecyclerView) findViewById(R.id.RecyclerViewJob);
-        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-
+        mRecyclerView = findViewById(R.id.RecyclerViewJob);
         FirebaseDatabaseHelper FH = new FirebaseDatabaseHelper();
+        final String currentUserID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+        welcome.append("Welcome ");
+
+        mRecyclerView.addOnItemTouchListener(
+                new RecyclerItemClickListener(getApplicationContext(), mRecyclerView ,new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override public void onItemClick(View view, int position) {
+
+                    }
+
+                    @Override public void onLongItemClick(View view, int position) {
+
+                    }
+                })
+        );
+
+        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                try{
+                    User account  = dataSnapshot.getChildren().iterator().next()
+                            .getValue(User.class);
+                    currentName = account.getName();
+                    welcome.append(currentName);
+                } catch (Throwable e) {
+
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) { }
+        });
+
 
         FH.readPosts(new FirebaseDatabaseHelper.DataStatus() {
             @Override
             public void DataIsLoaded(List<Post> posts ,List<String> keys) {
                 new ReyclerView_Config().setConfig(mRecyclerView, MainActivity.this, posts, keys);
             }
-
             @Override
-            public void DataIsInserted() {
-            }
-
+            public void DataIsInserted() { }
             @Override
-            public void DataIsDeleted() {
-            }
+            public void DataIsDeleted() { }
         });
 
         postbtn.setOnClickListener(new View.OnClickListener() {

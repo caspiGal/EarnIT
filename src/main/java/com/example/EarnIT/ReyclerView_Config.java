@@ -1,24 +1,12 @@
 package com.example.EarnIT;
 
 import android.content.Context;
-import android.provider.ContactsContract;
-import android.text.TextUtils;
-import android.view.GestureDetector;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListAdapter;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.google.firebase.auth.FirebaseAuth;
-
-import org.w3c.dom.Text;
-
 import java.util.List;
 
 public class ReyclerView_Config {

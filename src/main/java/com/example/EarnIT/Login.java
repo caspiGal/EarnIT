@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,14 +18,22 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 
 public class Login extends AppCompatActivity {
 
+    final FirebaseDatabase database = FirebaseDatabase.getInstance();
     private EditText mEmail, mPassword;
     private Button mLoginBtn;
+    private DatabaseReference myRef;
     private TextView mCreatebtn;
     private FirebaseAuth fAuth;
+    private User user;
     private ProgressBar progressBar;
 
 
@@ -40,6 +49,24 @@ public class Login extends AppCompatActivity {
         fAuth = FirebaseAuth.getInstance();
         progressBar = findViewById(R.id.progressBar2);
 
+        myRef = database.getInstance().getReference("Users");
+
+        ValueEventListener userListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // Get Post object and use the values to update the UI
+                user = dataSnapshot.getValue(User.class);
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Getting Post failed, log a message
+                Log.w("", "loadUser:onCancelled", databaseError.toException());
+                // ...
+            }
+        };
+        myRef.addValueEventListener(userListener);
 
         mLoginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,20 +90,19 @@ public class Login extends AppCompatActivity {
                 fAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful()){
-                            if(mEmail.getText().toString().equals("elyashivderi17@gmail.com") || mEmail.getText().toString().equals("caspigal7@gmail.com") || mEmail.getText().toString().equals("liozelmalem@gmail.com")){
-                                Toast.makeText(Login.this,"Hello Manager , What Would You Like To Do Today ? ",Toast.LENGTH_SHORT).show();
-                                Intent j = new Intent(getApplicationContext(),ManagerActivity.class);
+                        if(task.isSuccessful()) {
+                            if (user.getPermission()) {
+                                Toast.makeText(Login.this, "Hello Manager , What Would You Like To Do Today ? ", Toast.LENGTH_SHORT).show();
+                                Intent j = new Intent(getApplicationContext(), ManagerActivity.class);
                                 startActivity(j);
-                            }
-                            else {
+                            } else {
                                 Toast.makeText(Login.this, "Login Successfully", Toast.LENGTH_SHORT).show();
                                 Intent i = new Intent(getApplicationContext(), MainActivity.class);
                                 startActivity(i);
                             }
                         }
                         else{
-                            Toast.makeText(Login.this,"Error ! " + task.getException().getMessage(),Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Login.this, "Error ! " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                             progressBar.setVisibility(View.GONE);
                         }
                     }
