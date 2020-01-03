@@ -33,8 +33,9 @@ public class Login extends AppCompatActivity {
     private DatabaseReference myRef;
     private TextView mCreatebtn;
     private FirebaseAuth fAuth;
-    private User user;
     private ProgressBar progressBar;
+
+    private boolean posterB;
 
 
     @Override
@@ -48,25 +49,26 @@ public class Login extends AppCompatActivity {
         mCreatebtn = findViewById(R.id.createView);
         fAuth = FirebaseAuth.getInstance();
         progressBar = findViewById(R.id.progressBar2);
-
         myRef = database.getInstance().getReference("Users");
 
-        ValueEventListener userListener = new ValueEventListener() {
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // Get Post object and use the values to update the UI
-                user = dataSnapshot.getValue(User.class);
-
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+              try{
+                  User account  = dataSnapshot.getChildren().iterator().next()
+                          .getValue(User.class);
+                posterB = account.getPermission();
+              }
+              catch (Throwable error){
+                  error.printStackTrace();
+              }
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
-                // Getting Post failed, log a message
-                Log.w("", "loadUser:onCancelled", databaseError.toException());
-                // ...
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
             }
-        };
-        myRef.addValueEventListener(userListener);
+        });
 
         mLoginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,12 +93,12 @@ public class Login extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()) {
-                            if (user.getPermission()) {
-                                Toast.makeText(Login.this, "Hello Manager , What Would You Like To Do Today ? ", Toast.LENGTH_SHORT).show();
-                                Intent j = new Intent(getApplicationContext(), ManagerActivity.class);
+                            if (posterB) {
+                                Toast.makeText(Login.this, "Login Successfully , Hello Poster", Toast.LENGTH_SHORT).show();
+                                Intent j = new Intent(getApplicationContext(), PostActivity.class);
                                 startActivity(j);
                             } else {
-                                Toast.makeText(Login.this, "Login Successfully", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Login.this, "Login Successfully , Hello Searcher", Toast.LENGTH_SHORT).show();
                                 Intent i = new Intent(getApplicationContext(), MainActivity.class);
                                 startActivity(i);
                             }

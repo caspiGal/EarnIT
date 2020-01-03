@@ -7,7 +7,7 @@ public class User {
     private String email;
     private String password;
     private String phone;
-    private boolean poster;
+    private boolean permission;
 
     public User(){
 
@@ -19,7 +19,7 @@ public class User {
         this.email = email;
         this.password = password;
         this.phone = phone;
-        this.poster = permission;
+        this.permission = permission;
     }
 
     public String getPhone() {
@@ -31,11 +31,11 @@ public class User {
     }
 
     public boolean getPermission() {
-        return poster;
+        return permission;
     }
 
     public void setPermission(boolean permission) {
-        this.poster = permission;
+        this.permission = permission;
     }
 
     public String getKey() {

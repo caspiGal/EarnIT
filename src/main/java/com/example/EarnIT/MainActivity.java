@@ -1,28 +1,21 @@
 package com.example.EarnIT;
 
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
-import android.accounts.Account;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import java.util.ArrayList;
-import java.util.List;
+import android.widget.Toast;
 
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -32,7 +25,6 @@ public class MainActivity extends AppCompatActivity {
     private DatabaseReference userRef;
     private TextView welcome;
     private RecyclerView mRecyclerView;
-    private Button postbtn;
     private Button logOutbtn;
 
     private String currentName = "";
@@ -47,24 +39,11 @@ public class MainActivity extends AppCompatActivity {
         myRef = database.getInstance().getReference("Posts");
         userRef = database.getInstance().getReference("Users");
         logOutbtn = findViewById(R.id.logOutbtn);
-        postbtn = findViewById(R.id.postbtn);
         mRecyclerView = findViewById(R.id.RecyclerViewJob);
-        FirebaseDatabaseHelper FH = new FirebaseDatabaseHelper();
+        final FirebaseDatabaseHelper FH = new FirebaseDatabaseHelper();
         final String currentUserID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         welcome.append("Welcome ");
-
-        mRecyclerView.addOnItemTouchListener(
-                new RecyclerItemClickListener(getApplicationContext(), mRecyclerView ,new RecyclerItemClickListener.OnItemClickListener() {
-                    @Override public void onItemClick(View view, int position) {
-
-                    }
-
-                    @Override public void onLongItemClick(View view, int position) {
-
-                    }
-                })
-        );
 
         userRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -95,18 +74,12 @@ public class MainActivity extends AppCompatActivity {
             public void DataIsDeleted() { }
         });
 
-        postbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), PostActivity.class));
-            }
-        });
-
 
 
         logOutbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Toast.makeText(MainActivity.this, "Logout Successfully...", Toast.LENGTH_SHORT).show();
                 logout(v);
             }
         });

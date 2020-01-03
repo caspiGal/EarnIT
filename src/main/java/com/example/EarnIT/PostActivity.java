@@ -3,6 +3,7 @@ package com.example.EarnIT;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -30,6 +31,8 @@ public class PostActivity extends AppCompatActivity {
     private TextView email;
     private TextView phone;
     private Button postbtn;
+    private Button logOutbtn;
+
 
     private ProgressBar progressBar;
     private TextView nameTextView;
@@ -48,6 +51,7 @@ public class PostActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.progressBar3);
         myRef = database.getReference("Users");
         nameTextView = findViewById(R.id.name);
+        logOutbtn = findViewById(R.id.logOutbtn);
 
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -55,7 +59,7 @@ public class PostActivity extends AppCompatActivity {
                 try{
                     User account  = dataSnapshot.getChildren().iterator().next()
                             .getValue(User.class);
-                    nameTextView.setText(account.getName());
+                    nameTextView.setText("Welcome " + account.getName());
                     email.setText(account.getEmail());
                     phone.setText(account.getPhone());
                 } catch (Throwable e) {
@@ -92,7 +96,8 @@ public class PostActivity extends AppCompatActivity {
                             @Override
                             public void onSuccess(Void aVoid) {
                                 Toast.makeText(PostActivity.this, "Post was added successfully", Toast.LENGTH_LONG).show();
-                                finish();
+                                description.setText("");
+                                price.setText("");
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
@@ -107,9 +112,24 @@ public class PostActivity extends AppCompatActivity {
 
         });
 
+
+        logOutbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                description.setText("");
+                price.setText("");
+                logout(v);
+            }
+        });
+
         progressBar.setVisibility(View.GONE);
 
     }
 
+    public void logout (View view){
+        FirebaseAuth.getInstance().signOut();
+        startActivity(new Intent(getApplicationContext(), Login.class));
+        finish();
+    }
 
 }

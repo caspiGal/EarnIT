@@ -1,61 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="350dp"
-    android:background="@drawable/wallpaper"
+    android:layout_height="305dp"
+    android:background="@drawable/k"
     android:orientation="vertical">
 
-    <EditText
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
         android:id="@+id/textViewDesc"
         android:layout_width="match_parent"
-        android:layout_height="75dp"
-        android:background="@android:color/holo_green_light"
-        android:ems="10"
-        android:gravity="start|top"
-        android:hint="Description"
-        android:inputType="textMultiLine" />
+        android:layout_height="51dp"
+        android:textSize="20dp" />
 
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <EditText
+    <TextView
         android:id="@+id/textViewPrice"
         android:layout_width="match_parent"
-        android:layout_height="71dp"
-        android:background="@android:color/holo_blue_light"
-        android:ems="10"
-        android:hint="Price"
-        android:inputType="textPersonName" />
+        android:layout_height="52dp"
+        android:textSize="20dp" />
 
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <EditText
+    <TextView
         android:id="@+id/phoneText"
         android:layout_width="match_parent"
-        android:layout_height="68dp"
-        android:background="@android:color/holo_red_light"
-        android:ems="10"
-        android:hint="Phone Number"
-        android:inputType="phone" />
+        android:layout_height="49dp"
+        android:textSize="20dp" />
 
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <EditText
+    <TextView
         android:id="@+id/emailText"
         android:layout_width="match_parent"
-        android:layout_height="64dp"
-        android:background="@android:color/holo_orange_dark"
-        android:ems="10"
-        android:hint="Email"
-        android:inputType="textEmailAddress" />
+        android:layout_height="49dp"
+        android:textSize="20dp" />
 
-    <Space
+    <Button
+        android:id="@+id/apply"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="25dp"
+        android:background="@android:drawable/button_onoff_indicator_off"
+        android:text="Apply"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="match_parent"
+        android:layout_height="78dp"
+        android:background="@drawable/k" />
 
 </LinearLayout>

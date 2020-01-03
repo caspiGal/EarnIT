@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/wallpaper"
+    android:background="@drawable/k"
     tools:context=".ManagerActivity">
 
     <TextView
@@ -35,6 +35,7 @@
         android:layout_marginEnd="162dp"
         android:layout_marginRight="162dp"
         android:layout_marginBottom="405dp"
+        android:background="@android:drawable/button_onoff_indicator_off"
         android:text="Remove The Last Post"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -51,6 +52,7 @@
         android:layout_marginEnd="117dp"
         android:layout_marginRight="117dp"
         android:layout_marginBottom="334dp"
+        android:background="@android:drawable/button_onoff_indicator_off"
         android:text="Using Report"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -67,6 +69,7 @@
         android:layout_marginEnd="117dp"
         android:layout_marginRight="117dp"
         android:layout_marginBottom="264dp"
+        android:background="@android:drawable/button_onoff_indicator_off"
         android:text="Move To Jobs View"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

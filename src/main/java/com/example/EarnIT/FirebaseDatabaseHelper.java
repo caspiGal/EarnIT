@@ -55,4 +55,8 @@ public class FirebaseDatabaseHelper {
         });
     }
 
+    public List<Post> getPosts(){
+        return posts;
+    }
+
 }
