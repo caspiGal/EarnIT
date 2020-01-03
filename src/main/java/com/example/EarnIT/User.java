@@ -7,13 +7,13 @@ public class User {
     private String email;
     private String password;
     private String phone;
-    private boolean permission;
+    private int permission;
 
     public User(){
 
     }
 
-    public User(String key, String name, String email, String password,String phone,boolean permission) {
+    public User(String key, String name, String email, String password,String phone,int permission) {
         this.key = key;
         this.name = name;
         this.email = email;
@@ -30,11 +30,11 @@ public class User {
         this.phone = phone;
     }
 
-    public boolean getPermission() {
+    public int getPermission() {
         return permission;
     }
 
-    public void setPermission(boolean permission) {
+    public void setPermission(int permission) {
         this.permission = permission;
     }
 

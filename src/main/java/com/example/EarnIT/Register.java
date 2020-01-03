@@ -31,7 +31,7 @@ public class Register extends AppCompatActivity {
     private EditText mFullName, mEmail, mPassword , phoneNumber;
     private Button mRegisterbtn;
     private TextView mLoginBtn;
-    private boolean permission;
+    private int permission;
     private Switch s;
     private FirebaseAuth fAuth;
     private ProgressBar progressBar;
@@ -64,9 +64,9 @@ public class Register extends AppCompatActivity {
                 s.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                         if (isChecked) {
-                            permission = true;
+                            permission = 1;
                         } else {
-                            permission = false;
+                            permission = 0;
                         }
                     }
                 });

@@ -35,7 +35,7 @@ public class Login extends AppCompatActivity {
     private FirebaseAuth fAuth;
     private ProgressBar progressBar;
 
-    private boolean posterB;
+    private int posterB;
 
 
     @Override
@@ -54,14 +54,13 @@ public class Login extends AppCompatActivity {
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-              try{
-                  User account  = dataSnapshot.getChildren().iterator().next()
-                          .getValue(User.class);
-                posterB = account.getPermission();
-              }
-              catch (Throwable error){
-                  error.printStackTrace();
-              }
+                try{
+                    User account  = dataSnapshot.getChildren().iterator().next()
+                            .getValue(User.class);
+                   posterB = account.getPermission();
+                } catch (Throwable e) {
+
+                }
             }
 
             @Override
@@ -93,7 +92,7 @@ public class Login extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()) {
-                            if (posterB) {
+                            if (posterB == 1) {
                                 Toast.makeText(Login.this, "Login Successfully , Hello Poster", Toast.LENGTH_SHORT).show();
                                 Intent j = new Intent(getApplicationContext(), PostActivity.class);
                                 startActivity(j);

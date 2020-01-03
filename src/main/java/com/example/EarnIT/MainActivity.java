@@ -79,7 +79,6 @@ public class MainActivity extends AppCompatActivity {
         logOutbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "Logout Successfully...", Toast.LENGTH_SHORT).show();
                 logout(v);
             }
         });
