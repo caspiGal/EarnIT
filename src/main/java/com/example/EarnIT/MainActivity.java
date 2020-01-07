@@ -45,12 +45,12 @@ public class MainActivity extends AppCompatActivity {
 
         welcome.append("Welcome ");
 
-        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+
+        userRef.child(currentUserID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 try{
-                    User account  = dataSnapshot.getChildren().iterator().next()
-                            .getValue(User.class);
+                    User account = dataSnapshot.getValue(User.class);
                     currentName = account.getName();
                     welcome.append(currentName);
                 } catch (Throwable e) {

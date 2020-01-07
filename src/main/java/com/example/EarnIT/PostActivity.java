@@ -1,4 +1,3 @@
-
 package com.example.EarnIT;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -32,6 +31,7 @@ public class PostActivity extends AppCompatActivity {
     private TextView phone;
     private Button postbtn;
     private Button logOutbtn;
+    private String currentUserId;
 
 
     private ProgressBar progressBar;
@@ -52,13 +52,14 @@ public class PostActivity extends AppCompatActivity {
         myRef = database.getReference("Users");
         nameTextView = findViewById(R.id.name);
         logOutbtn = findViewById(R.id.logOutbtn);
+        fAuth = FirebaseAuth.getInstance();
+        currentUserId = fAuth.getCurrentUser().getUid();
 
-        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        myRef.child(currentUserId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 try{
-                    User account  = dataSnapshot.getChildren().iterator().next()
-                            .getValue(User.class);
+                    User account  = dataSnapshot.getValue(User.class);
                     nameTextView.setText("Welcome " + account.getName());
                     email.setText(account.getEmail());
                     phone.setText(account.getPhone());

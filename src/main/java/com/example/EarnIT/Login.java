@@ -51,13 +51,15 @@ public class Login extends AppCompatActivity {
         progressBar = findViewById(R.id.progressBar2);
         myRef = database.getInstance().getReference("Users");
 
+
+/*
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 try{
                     User account  = dataSnapshot.getChildren().iterator().next()
                             .getValue(User.class);
-                   posterB = account.getPermission();
+                    posterB = account.getPermission();
                 } catch (Throwable e) {
 
                 }
@@ -68,6 +70,8 @@ public class Login extends AppCompatActivity {
 
             }
         });
+
+ */
 
         mLoginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,6 +96,53 @@ public class Login extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()) {
+                            Log.d("Testing", "dududududududududududu");
+/*
+                            myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    try{
+                                        User account  = dataSnapshot.getChildren().iterator().next()
+                                                .getValue(User.class);
+                                        Log.d("Testing", "onDataChange: user = "+account.getName());
+                                        posterB = account.getPermission();
+                                    } catch (Throwable e) {
+
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                }
+                            });
+
+ */
+                            Log.d("Testing", "UID = "+fAuth.getCurrentUser().getEmail());
+                            DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users").child(fAuth.getCurrentUser().getUid());
+                            ref.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    User user = dataSnapshot.getValue(User.class);
+                                    if (user.getPermission() == 1) {
+                                        Toast.makeText(Login.this, "Login Successfully , Hello Poster", Toast.LENGTH_SHORT).show();
+                                        Intent j = new Intent(getApplicationContext(), PostActivity.class);
+                                        startActivity(j);
+                                    } else {
+                                        Toast.makeText(Login.this, "Login Successfully , Hello Searcher", Toast.LENGTH_SHORT).show();
+                                        Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                                        startActivity(i);
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                }
+                            });
+
+/*
+                            Log.d("Testing", "onComplete: posterB = "+posterB);
                             if (posterB == 1) {
                                 Toast.makeText(Login.this, "Login Successfully , Hello Poster", Toast.LENGTH_SHORT).show();
                                 Intent j = new Intent(getApplicationContext(), PostActivity.class);
@@ -101,6 +152,8 @@ public class Login extends AppCompatActivity {
                                 Intent i = new Intent(getApplicationContext(), MainActivity.class);
                                 startActivity(i);
                             }
+
+ */
                         }
                         else{
                             Toast.makeText(Login.this, "Error ! " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();

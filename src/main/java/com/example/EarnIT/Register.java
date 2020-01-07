@@ -61,15 +61,6 @@ public class Register extends AppCompatActivity {
                 String password = mPassword.getText().toString().trim();
                 String phone = phoneNumber.getText().toString().trim();
 
-                s.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                        if (isChecked) {
-                            permission = 1;
-                        } else {
-                            permission = 0;
-                        }
-                    }
-                });
 
                 if(TextUtils.isEmpty(email)){
                     mEmail.setError("Email Is Required.");
@@ -89,29 +80,30 @@ public class Register extends AppCompatActivity {
                 progressBar.setVisibility(View.VISIBLE);
 
                 fAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if(task.isSuccessful()){
-                                    myRef = database.getInstance().getReference("Users");
-                                    String id = myRef.push().getKey();
-                                    User user = new User(id,mFullName.getText().toString(),mEmail.getText().toString(),mPassword.getText().toString(),phoneNumber.getText().toString(),permission);
-                                    myRef.child(id).setValue(user)
-                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                @Override
-                                                public void onSuccess(Void aVoid) {
-                                                    Toast.makeText(Register.this, "User was added successfully", Toast.LENGTH_LONG).show();
-                                                    finish();
-                                                }
-                                            })
-                                            .addOnFailureListener(new OnFailureListener() {
-                                                @Override
-                                                public void onFailure(Exception e) {
-                                                    Toast.makeText(Register.this, "User adding post", Toast.LENGTH_LONG).show();
-                                                }
-                                            });
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if(task.isSuccessful()){
+                            myRef = database.getInstance().getReference("Users");
+                            //String id = myRef.push().getKey();
+                            String id = fAuth.getCurrentUser().getUid();
+                            final User user = new User(id,mFullName.getText().toString(),mEmail.getText().toString(),mPassword.getText().toString(),phoneNumber.getText().toString(),s.isChecked()?1:0);
+                            myRef.child(id).setValue(user)
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            Toast.makeText(Register.this, "User was added successfully", Toast.LENGTH_LONG).show();
+                                            finish();
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(Exception e) {
+                                            Toast.makeText(Register.this, "User adding post", Toast.LENGTH_LONG).show();
+                                        }
+                                    });
 
-                                    Toast.makeText(Register.this,"User Created.",Toast.LENGTH_SHORT).show();
-                                    move_to_main();
+                            Toast.makeText(Register.this,"User Created.",Toast.LENGTH_SHORT).show();
+                            move_to_main();
                         }
                         else{
                             Toast.makeText(Register.this,"Error ! " + task.getException().getMessage(),Toast.LENGTH_SHORT).show();
@@ -136,4 +128,3 @@ public class Register extends AppCompatActivity {
     }
 
 }
-
