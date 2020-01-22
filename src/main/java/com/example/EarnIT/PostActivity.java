@@ -16,8 +16,11 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -89,6 +92,19 @@ public class PostActivity extends AppCompatActivity {
                 String mdescription = description.getText().toString().trim();
 
                 setNotificationSend(v);
+                openDialog();
+                fAuth.getCurrentUser().sendEmailVerification()
+                        .addOnCompleteListener(PostActivity.this, new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+                                    Toast.makeText(PostActivity.this, "Email sent", Toast.LENGTH_LONG).show();
+                                }
+                                else{
+                                    Toast.makeText(PostActivity.this, "Email sending failed", Toast.LENGTH_LONG).show();
+                                }
+                            }
+                        });
 
                 if(TextUtils.isEmpty(mprice)){
                     price.setError("Price Is Required.");
@@ -172,6 +188,13 @@ public class PostActivity extends AppCompatActivity {
             error.printStackTrace();
         }
     }
+
+
+    public void openDialog() {
+        _Dialog dialog = new _Dialog();
+        dialog.show(getSupportFragmentManager(),"Apply Dialog");
+    }
+
 
     public void logout (View view){
         FirebaseAuth.getInstance().signOut();

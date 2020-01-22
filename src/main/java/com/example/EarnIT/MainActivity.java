@@ -9,6 +9,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import android.view.Menu;
 
 import android.app.NotificationManager;
 import android.content.Context;
@@ -81,8 +82,6 @@ public class MainActivity extends AppCompatActivity {
             public void DataIsDeleted() { }
         });
 
-
-
         logOutbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -93,6 +92,12 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu,menu);
+        return true;
+    }
 
     public void logout (View view){
         FirebaseAuth.getInstance().signOut();

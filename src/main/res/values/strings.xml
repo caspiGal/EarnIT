@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">EarnIT</string>
+    <string name="Settings">Settings</string>
+    <string name="Help">Help</string>
 </resources>

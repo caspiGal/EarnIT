@@ -1,10 +1,12 @@
 package com.example.EarnIT;
 
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.view.View;
@@ -13,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -23,6 +26,8 @@ public class ReyclerView_Config {
 
     private Context mContext;
     private PostAdapter mPostAdapter;
+    private NotificationCompat.Builder notification;
+    private static final int uniqueID = 1245;
 
 
     public void setConfig(RecyclerView recyclerView, Context context, List<Post> posts, List<String> keys) {
@@ -30,6 +35,41 @@ public class ReyclerView_Config {
         mPostAdapter = new PostAdapter(posts, keys);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
         recyclerView.setAdapter(mPostAdapter);
+        notification = new NotificationCompat.Builder(mContext,"CHANNEL ID");
+        notification.setAutoCancel(true);
+    }
+
+    @NonNull
+    public void setNotificationSend(View v){
+        notification.setTicker("Ticker");
+        notification.setWhen(System.currentTimeMillis());
+        notification.setContentTitle("EarnIT");
+        notification.setContentText("Job Applied Successfully");
+        notification.setSmallIcon(R.drawable.ic_launcher_foreground);
+        Intent intent = new Intent(mContext,MainActivity.class);
+        PendingIntent pi = PendingIntent.getActivity(mContext,0,intent,PendingIntent.FLAG_UPDATE_CURRENT);
+        NotificationManager nm = (NotificationManager) mContext.getSystemService(mContext.NOTIFICATION_SERVICE);
+
+        // channel adding first
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            notification.setChannelId("com.myApp");
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(
+                    "com.myApp",
+                    "My App",
+                    NotificationManager.IMPORTANCE_DEFAULT
+            );
+            if (nm != null) {
+                nm.createNotificationChannel(channel);
+            }
+        }
+        try {
+            nm.notify(uniqueID,notification.build());
+        }
+        catch(Throwable error){
+            error.printStackTrace();
+        }
     }
 
 
@@ -53,6 +93,7 @@ public class ReyclerView_Config {
             apply.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    setNotificationSend(v);
                     Toast.makeText(mContext, "Successfully", Toast.LENGTH_LONG).show();
                 }
             });
