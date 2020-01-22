@@ -84,13 +84,26 @@ public class Register extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
                             myRef = database.getInstance().getReference("Users");
-                            //String id = myRef.push().getKey();
+//                            String id = myRef.push().getKey();
                             String id = fAuth.getCurrentUser().getUid();
                             final User user = new User(id,mFullName.getText().toString(),mEmail.getText().toString(),mPassword.getText().toString(),phoneNumber.getText().toString(),s.isChecked()?1:0);
                             myRef.child(id).setValue(user)
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void aVoid) {
+
+
+                                            fAuth.getCurrentUser().sendEmailVerification()
+                                                    .addOnCompleteListener(Register.this, new OnCompleteListener<Void>() {
+                                                        @Override
+                                                        public void onComplete(@NonNull Task<Void> task) {
+                                                            if (task.isSuccessful()) {
+                                                                Toast.makeText(Register.this, "Email sent", Toast.LENGTH_LONG).show();
+                                                            }
+                                                        }
+                                                    });
+
+
                                             Toast.makeText(Register.this, "User was added successfully", Toast.LENGTH_LONG).show();
                                             finish();
                                         }
@@ -98,7 +111,7 @@ public class Register extends AppCompatActivity {
                                     .addOnFailureListener(new OnFailureListener() {
                                         @Override
                                         public void onFailure(Exception e) {
-                                            Toast.makeText(Register.this, "User adding post", Toast.LENGTH_LONG).show();
+                                            Toast.makeText(Register.this, "User added failed", Toast.LENGTH_LONG).show();
                                         }
                                     });
 

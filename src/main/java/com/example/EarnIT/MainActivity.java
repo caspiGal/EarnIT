@@ -1,6 +1,7 @@
 package com.example.EarnIT;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -8,6 +9,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -18,6 +22,7 @@ import android.widget.Toast;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+
 
     final FirebaseDatabase database = FirebaseDatabase.getInstance();
     private FirebaseAuth mAuth;
@@ -69,7 +74,9 @@ public class MainActivity extends AppCompatActivity {
                 new ReyclerView_Config().setConfig(mRecyclerView, MainActivity.this, posts, keys);
             }
             @Override
-            public void DataIsInserted() { }
+            public void DataIsInserted() {
+
+            }
             @Override
             public void DataIsDeleted() { }
         });
@@ -85,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
 
     public void logout (View view){
         FirebaseAuth.getInstance().signOut();
